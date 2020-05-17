@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal:  12,
         alignItems: 'center',
-        width: 200,
+        width: 300,
     },
     listTitle: {
         fontSize: 24,

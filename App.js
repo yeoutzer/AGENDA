@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { Image ,StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
 import { AntDesign, MaterialIcons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
+import tempReminder from './tempReminder';
 import TodoList from './components/TodoList';
+import Reminder from './components/Reminder';
 
 export default class App extends React.Component {
   render() {
@@ -11,25 +13,45 @@ export default class App extends React.Component {
         <View style = { styles.container }>
           <View style = {{ flexDirection: 'row'}}>
             <View style = { styles.lineEffect }/>
-            <Text style = { styles.title }>AGENDA</Text>
+              <Image style = { styles.logo }
+                     source = { require('./logo_horizontal.png') }
+                     resizeMode = 'contain'
+              />
             <View style = { styles.lineEffect }/>
           </View>
 
-          <View style = { styles.horizontalDivider }/>
+          <View style = {styles.horizontalDivider}>
+            <Text style = {styles.heading}>To-Do</Text>
+          </View>
 
-          <View style = {{ height: 325, paddingLeft: 32, paddingTop: 50}}>
+          <View style = {{ height: 387, paddingLeft: 32}}>
             <FlatList
                 data = { tempData }
                 keyExtractor = { item => item.name}
                 horizontal = { true }
-                showHorizontalScrollIndicator = { false }
+                showsHorizontalScrollIndicator = { false }
                 renderItem = {({ item }) => (
                     <TodoList list = { item }/>
                 )}
             />
           </View>
+
+          <View style = {styles.horizontalDivider}>
+            <Text style = {styles.heading}>Reminders</Text>
+          </View>
+
+          <View style = {{ height: 150, paddingHorizontal: 10 }}>
+            <FlatList
+              data = {tempReminder}
+              keyExtractor = {item => item.event}
+              showsVerticalScrollIndicator = {false}
+              renderItem = {({item}) => (
+                  <Reminder list = {item}/>
+              )}
+              />
+          </View>
           
-          <View style = {{ flexDirection: 'row', paddingTop: 100 }}>
+          <View style = {{ flexDirection: 'row', paddingTop: 15 }}>
             <View style = { styles.menuIcon }>
             <TouchableOpacity style = { styles.menuList }>
               <FontAwesome5 name = 'user-friends' size = { 24 } color = { colors.blue }/>
@@ -67,12 +89,12 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 50,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1A1A1A',
     alignItems: 'center'
     //justifyContent: 'center',
   },
   horizontalDivider: {
-    padding: 16
+    padding: 10,
   },
   lineEffect: {
     backgroundColor: colors.lightblue,
@@ -105,4 +127,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: 'center'
   },
+  logo: {
+    height: 60,
+    flex: 2,
+    paddingHorizontal: 5,
+  },
+  heading: {
+    alignSelf: 'center',
+    fontSize: 30,
+    fontWeight: '500',
+    color: colors.white,
+  }
 });
