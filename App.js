@@ -3,9 +3,7 @@ import { Image ,StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react
 import { AntDesign, MaterialIcons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
-import tempReminder from './tempReminder';
 import TodoList from './components/TodoList';
-import Reminder from './components/Reminder';
 
 export default class App extends React.Component {
   render() {
@@ -24,7 +22,7 @@ export default class App extends React.Component {
             <Text style = {styles.heading}>To-Do</Text>
           </View>
 
-          <View style = {{ height: 387, paddingLeft: 32}}>
+          <View style = {{ height: 400, paddingLeft: 32}}>
             <FlatList
                 data = { tempData }
                 keyExtractor = { item => item.name}
@@ -36,46 +34,26 @@ export default class App extends React.Component {
             />
           </View>
 
-          <View style = {styles.horizontalDivider}>
-            <Text style = {styles.heading}>Reminders</Text>
-          </View>
-
-          <View style = {{ height: 150, paddingHorizontal: 10 }}>
-            <FlatList
-              data = {tempReminder}
-              keyExtractor = {item => item.event}
-              showsVerticalScrollIndicator = {false}
-              renderItem = {({item}) => (
-                  <Reminder list = {item}/>
-              )}
-              />
-          </View>
+          <View style = {styles.horizontalDivider}></View>
           
           <View style = {{ flexDirection: 'row', paddingTop: 15 }}>
             <View style = { styles.menuIcon }>
             <TouchableOpacity style = { styles.menuList }>
-              <FontAwesome5 name = 'user-friends' size = { 24 } color = { colors.blue }/>
+              <FontAwesome5 name = 'user-friends' size = { 30 } color = { colors.blue }/>
             </TouchableOpacity>
             <Text style = { styles.menuFont }>Friends</Text>
             </View>
 
             <View style = { styles.menuIcon }>
             <TouchableOpacity style = { styles.menuList }>
-              <MaterialCommunityIcons name = 'chart-line' size = { 24 } color = { colors.blue }/>
+              <MaterialCommunityIcons name = 'chart-line' size = { 30 } color = { colors.blue }/>
             </TouchableOpacity>
             <Text style = { styles.menuFont }>Rank</Text>
             </View>
 
             <View style = { styles.menuIcon }>
             <TouchableOpacity style = { styles.menuList }>
-              <MaterialIcons name = 'alarm' size = { 24 } color = { colors.blue }/>
-            </TouchableOpacity>
-            <Text style = { styles.menuFont }>Reminders</Text>
-            </View>
-
-            <View style = { styles.menuIcon }>
-            <TouchableOpacity style = { styles.menuList }>
-              <AntDesign name = 'plus' size = { 24 } color = { colors.blue }/>
+              <AntDesign name = 'plus' size = { 30 } color = { colors.blue }/>
             </TouchableOpacity>
             <Text style = { styles.menuFont }>Add List</Text>
             </View>
@@ -94,7 +72,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
   },
   horizontalDivider: {
-    padding: 10,
+    padding: 30,
   },
   lineEffect: {
     backgroundColor: colors.lightblue,
@@ -113,19 +91,23 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.lightblue,
     borderRadius: 4,
-    padding: 16,
+    padding: 10,
+    marginHorizontal: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 70,
+    width: 70,
   },
   menuIcon: {
     paddingLeft: 13,
-    paddingRight: 13
+    paddingRight: 13,
   },
   menuFont: {
     color: colors.blue,
     fontWeight: '600',
     fontSize: 15,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 5,
   },
   logo: {
     height: 60,

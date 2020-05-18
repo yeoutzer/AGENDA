@@ -19,6 +19,17 @@ export default TodoList = ({ list }) => {
                     <Text style = { styles.count }>{ completedCount }</Text>
                     <Text style = { styles.subtitle }>Completed</Text>
                 </View>
+                    <View style={{alignItems: 'center'}}>
+                        {list.remind == true
+                            ? <Text style={styles.count}>
+                                {Math.floor((list.date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
+                                </Text>
+                            : null}
+                        {list.remind == true
+                        ? <Text style={styles.subtitle}>Countdown</Text>
+                            : null}
+                    </View>
+
             </View>
         </View>
     );
@@ -43,6 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontWeight: '200',
         color: colors.white,
+        marginTop: 10,
     },
     subtitle: {
         fontSize: 12,
