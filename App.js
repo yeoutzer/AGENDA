@@ -1,14 +1,31 @@
 import React from 'react';
-import { Image ,StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { Image ,StyleSheet, Text, View, TouchableOpacity, FlatList, TouchableNativeFeedbackBase, Modal } from 'react-native';
 import { AntDesign, MaterialIcons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
 import TodoList from './components/TodoList';
+import AddListModal from './components/AddListModal';
 
 export default class App extends React.Component {
+  state = {
+    addTodoVisible: false
+  };
+
+  toggleAddToDoModal() {
+    this.setState({ addTodoVisible: !this.state.addTodoVisible });
+  }
+
   render() {
     return (
         <View style = { styles.container }>
+          <Modal 
+            animationType = "slide"
+            visible = {this.state.addTodoVisible}
+            onRequestClose = {() => this.toggleAddToDoModal()}
+          >
+            <AddListModal closeModal = {() => this.toggleAddToDoModal()}/>
+          </Modal>
+
           <View style = {{ flexDirection: 'row'}}>
             <View style = { styles.lineEffect }/>
               <Image style = { styles.logo }
@@ -52,8 +69,8 @@ export default class App extends React.Component {
             </View>
 
             <View style = { styles.menuIcon }>
-            <TouchableOpacity style = { styles.menuList }>
-              <AntDesign name = 'plus' size = { 30 } color = { colors.blue }/>
+            <TouchableOpacity style = { styles.menuList } onPress = {() => this.toggleAddToDoModal()}>
+              <AntDesign name = 'plus' size = { 24 } color = { colors.blue }/>
             </TouchableOpacity>
             <Text style = { styles.menuFont }>Add List</Text>
             </View>
@@ -68,8 +85,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     flex: 1,
     backgroundColor: '#1A1A1A',
-    alignItems: 'center'
-    //justifyContent: 'center',
+    alignItems: 'center',
   },
   horizontalDivider: {
     padding: 30,
