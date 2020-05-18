@@ -69,13 +69,6 @@ export default class App extends React.Component {
             </View>
 
             <View style = { styles.menuIcon }>
-            <TouchableOpacity style = { styles.menuList }>
-              <MaterialIcons name = 'alarm' size = { 24 } color = { colors.blue }/>
-            </TouchableOpacity>
-            <Text style = { styles.menuFont }>Reminders</Text>
-            </View>
-
-            <View style = { styles.menuIcon }>
             <TouchableOpacity style = { styles.menuList } onPress = {() => this.toggleAddToDoModal()}>
               <AntDesign name = 'plus' size = { 24 } color = { colors.blue }/>
             </TouchableOpacity>
