@@ -48,18 +48,15 @@ const styles = StyleSheet.create({
     listTitle: {
         fontSize: 24,
         fontWeight: '700',
-        //color: colors.white,
         marginBottom: 18,
     },
     count: {
         fontSize: 48,
         fontWeight: '200',
-        //color: colors.white,
         marginTop: 10,
     },
     subtitle: {
         fontSize: 12,
         fontWeight: '700',
-        //color: colors.white,
     },
 });

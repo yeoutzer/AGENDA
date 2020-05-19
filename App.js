@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     },
     menuList: {
         borderWidth: 2,
-        borderColor: colors.lightblue,
+        borderColor: colors.white,
         borderRadius: 4,
         padding: 10,
         marginHorizontal: 10,
