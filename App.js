@@ -27,8 +27,8 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Login />
-            /*<View style={styles.container}>
+            //<Login />
+            <View style={styles.container}>
                 <Modal
                     animationType="slide"
                     visible={this.state.addTodoVisible}
@@ -64,42 +64,42 @@ export default class App extends React.Component {
 
                 <View style={styles.horizontalDivider}></View>
 
-                <View style={{flexDirection: 'row', paddingTop: 15}}>
-                    <View style={styles.menuIcon}>
+                <View style={{flexDirection: 'row', marginTop: 15}}>
+                    <View style = {styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
-                            <FontAwesome5 name='user-friends' size={30} color={colors.blue}/>
+                            <FontAwesome5 name='user-friends' size={30} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Friends</Text>
                     </View>
 
-                    <View style={styles.menuIcon}>
+                    <View style = {styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
-                            <MaterialCommunityIcons name='chart-line' size={30} color={colors.blue}/>
+                            <MaterialCommunityIcons name='chart-line' size={30} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Rank</Text>
                     </View>
 
-                    <View style={styles.menuIcon}>
+                    <View style = {styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList} onPress={() => this.toggleAddToDoModal()}>
-                            <AntDesign name='plus' size={24} color={colors.blue}/>
+                            <AntDesign name='plus' size={24} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Add List</Text>
                     </View>
                 </View>
-            </View>*/
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 50,
+        paddingVertical: 10,
         flex: 1,
         backgroundColor: '#1A1A1A',
         alignItems: 'center',
     },
     horizontalDivider: {
-        padding: 30,
+        paddingBottom: 10
     },
     lineEffect: {
         backgroundColor: colors.lightblue,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         paddingRight: 13,
     },
     menuFont: {
-        color: colors.blue,
+        color: colors.white,
         fontWeight: '600',
         fontSize: 15,
         alignSelf: 'center',

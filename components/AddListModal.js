@@ -11,6 +11,7 @@ import {
 import {AntDesign} from '@expo/vector-icons';
 import colors from '../Colors';
 import tempData from "../tempData";
+//import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default class AddListModal extends React.Component {
     backgroundColors = ["#5CD859", "#24A6D9", "#595BD9", "#8022D9", "#D159D8", "#D85962", "#D88559"];
@@ -47,9 +48,9 @@ export default class AddListModal extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor = {'#1A1A1A'}>
                 <TouchableOpacity style={{position: "absolute", top: 64, right: 32}} onPress={this.props.closeModal}>
-                    <AntDesign name="close" size={24} color={colors.black}/>
+                    <AntDesign name="close" size={24} color={'white'}/>
                 </TouchableOpacity>
 
                 <View style={{alignSelf: "stretch", marginHorizontal: 32}}>
@@ -66,10 +67,10 @@ export default class AddListModal extends React.Component {
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.create, {backgroundColor: this.state.color}]}
+                        style={[styles.create, {borderColor: this.state.color}]}
                         onPress={this.createTodo}
                     >
-                        <Text style={{color: colors.white, fontWeight: "600"}}>Create!</Text>
+                        <Text style={{color: this.state.color, fontWeight: "600"}}>Create task</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: "800",
-        color: colors.black,
+        color: 'white',
         alignSelf: "center",
         marginBottom: 16
     },
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
         height: 50,
         borderRadius: 6,
+        borderWidth: 2,
         alignItems: "center",
         justifyContent: "center"
     },
