@@ -36,7 +36,7 @@ export default class TodoModal extends React.Component {
                         styles.todo,
                         {
                             textDecorationLine: todo.completed ? 'line-through' : 'none',
-                            color: todo.completed ? colors.gray : colors.black
+                            color: todo.completed ? colors.gray : this.state.color
                         }
                     ]}
                 >
@@ -56,7 +56,7 @@ export default class TodoModal extends React.Component {
                     style={{position: 'absolute', top: 64, right: 32, zIndex: 10}}
                     onPress={this.props.closeModal}
                 >
-                    <AntDesign name='close' size={24} color={colors.black}/>
+                    <AntDesign name='close' size={24} color={colors.white}/>
                 </TouchableOpacity>
                 <View style={[styles.section, styles.header, {borderBottomColor: this.state.color}]}>
                     <View>
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#1A1A1A',
     },
     section: {
         flex: 1,
@@ -105,13 +106,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: '800',
-        color: colors.black,
+        color: colors.white,
     },
     taskCount: {
         marginTop: 4,
         marginBottom: 16,
         color: colors.gray,
         fontWeight: '600',
+        opacity: 0.5,
     },
     footer: {
         paddingHorizontal: 32,
