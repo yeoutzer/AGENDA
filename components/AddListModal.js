@@ -5,7 +5,6 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     TouchableOpacity,
-    TouchableNativeFeedbackBase,
     TextInput
 } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
@@ -112,7 +111,6 @@ export default class AddListModal extends React.Component {
                             mode={mode}
                             format="DD/MM/YYYY"
                             display="spinner"
-                            textColor="white"
                             onChange={this.setDate}
                         />
                     }
