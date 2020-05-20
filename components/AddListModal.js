@@ -86,6 +86,7 @@ export default class AddListModal extends React.Component {
                     <TextInput
                         style={styles.input}
                         placeholder="Task Name"
+                        placeholderTextColor={colors.white}
                         onChangeText={text => this.setState({ name: text })}
                     />
 
@@ -106,11 +107,16 @@ export default class AddListModal extends React.Component {
 
                     {
                         show && <DateTimePicker
+                            style={{
+                                backgroundColor: '#FFFFFF',
+                                marginTop: 10,
+                            }}
                             value={date}
                             mode={mode}
                             format="DD/MM/YYYY"
                             display='default'
                             onChange={this.setDate}
+                            textColor='#FFFFFF'
                         />
                     }
 
