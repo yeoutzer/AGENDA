@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import colors from '../Colors';
+import moment from 'moment';
 
 export default TodoList = ({list}) => {
     const completedCount = list.todos.filter(todo => todo.completed).length;
@@ -22,7 +23,7 @@ export default TodoList = ({list}) => {
                 <View style={{alignItems: 'center'}}>
                     {list.remind == true
                         ? <Text style={[styles.count, {color: list.color}]}>
-                            {Math.floor((list.date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
+                            {moment(list.date).diff(moment(new Date()), 'days')}
                         </Text>
                         : null}
                     {list.remind == true
