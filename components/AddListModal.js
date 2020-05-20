@@ -117,7 +117,6 @@ export default class AddListModal extends React.Component {
                             format="DD/MM/YYYY"
                             display="spinner"
                             onChange={this.setDate}
-                            textColor='#FFFFFF'
                         />
                     }
 
