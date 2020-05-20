@@ -8,11 +8,11 @@ import {
     TextInput,
     Switch
 } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
 import colors from '../Colors';
 import tempData from "../tempData";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { MaterialIcons } from '@expo/vector-icons';
+import {MaterialIcons} from '@expo/vector-icons';
 import moment from "moment";
 
 export default class AddListModal extends React.Component {
@@ -28,7 +28,7 @@ export default class AddListModal extends React.Component {
     };
 
     createTodo = () => {
-        const { name, color, date, remind } = this.state
+        const {name, color, date, remind} = this.state
 
         tempData.push({
             name,
@@ -38,7 +38,10 @@ export default class AddListModal extends React.Component {
             todos: []
         });
 
-        this.setState({ name: "", date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) });
+        this.setState({
+            name: "",
+            date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
+        });
         this.props.closeModal();
     }
 
@@ -66,8 +69,8 @@ export default class AddListModal extends React.Component {
             return (
                 <TouchableOpacity
                     key={color}
-                    style={[styles.colorSelect, { backgroundColor: color }]}
-                    onPress={() => this.setState({ color })}
+                    style={[styles.colorSelect, {backgroundColor: color}]}
+                    onPress={() => this.setState({color})}
                 />
             )
         })
@@ -75,21 +78,21 @@ export default class AddListModal extends React.Component {
 
 
     render() {
-        const { mode, date, show } = this.state;
+        const {mode, date, show} = this.state;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor={'#1A1A1A'}>
-                <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={this.props.closeModal}>
-                    <AntDesign name="close" size={24} color={'white'} />
+                <TouchableOpacity style={{position: "absolute", top: 64, right: 32}} onPress={this.props.closeModal}>
+                    <AntDesign name="close" size={24} color={'white'}/>
                 </TouchableOpacity>
 
-                <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
+                <View style={{alignSelf: "stretch", marginHorizontal: 32}}>
                     <Text style={styles.title}>Create To-Do List</Text>
 
                     <TextInput
                         style={styles.input}
                         placeholder="Task Name"
                         placeholderTextColor={colors.white}
-                        onChangeText={text => this.setState({ name: text })}
+                        onChangeText={text => this.setState({name: text})}
                     />
 
                     <View style={{
@@ -105,21 +108,21 @@ export default class AddListModal extends React.Component {
                             onValueChange={(value) => this.setState({remind: value, show: value})}
                             value={this.state.remind}
                         />
-                        <View style={this.state.remind ? {opacity: 1} : {opacity:0.1}}>
-                    <View style={styles.dateBox}>
-                        <Text style={styles.dateText}>
-                            {moment(this.state.date).format("DD/MM/YYYY")}
-                        </Text>
-                    </View>
+                        <View style={this.state.remind ? {opacity: 1} : {opacity: 0.1}}>
+                            <View style={styles.dateBox}>
+                                <Text style={styles.dateText}>
+                                    {moment(this.state.date).format("DD/MM/YYYY")}
+                                </Text>
+                            </View>
 
-{/*                    <TouchableOpacity
+                            {/*                    <TouchableOpacity
                         style={styles.calendar}
                         onPress={this.showDatePicker}
                         disabled={!this.state.remind}
                     >
                         <MaterialIcons name="date-range" size={24} color={colors.white} />
                     </TouchableOpacity>*/}
-                    </View>
+                        </View>
                     </View>
 
                     {
@@ -139,15 +142,15 @@ export default class AddListModal extends React.Component {
                         />
                     }
 
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
+                    <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 12}}>
                         {this.renderColors()}
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.create, { borderColor: this.state.color }]}
+                        style={[styles.create, {borderColor: this.state.color}]}
                         onPress={this.createTodo}
                     >
-                        <Text style={{ color: this.state.color, fontWeight: "600" }}>Create</Text>
+                        <Text style={{color: this.state.color, fontWeight: "600"}}>Create</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
