@@ -23,7 +23,7 @@ export default TodoList = ({list}) => {
                 <View style={{alignItems: 'center'}}>
                     {list.remind == true
                         ? <Text style={[styles.count, {color: list.color}]}>
-                            {moment(list.date).diff(moment(new Date()), 'days')}
+                            {moment(list.date).diff(moment(), 'days') + 1}
                         </Text>
                         : null}
                     {list.remind == true
