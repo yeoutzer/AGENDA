@@ -5,7 +5,6 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     TouchableOpacity,
-    TouchableNativeFeedbackBase,
     TextInput
 } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
@@ -23,15 +22,17 @@ export default class AddListModal extends React.Component {
         color: this.backgroundColors[0],
         date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
         mode: 'date',
-        show: false
+        show: false,
+        remind: true
     };
 
     createTodo = () => {
-        const { name, color, date } = this.state
+        const { name, color, date, remind } = this.state
 
         tempData.push({
             name,
             color,
+            remind,
             date,
             todos: []
         });
@@ -114,7 +115,7 @@ export default class AddListModal extends React.Component {
                             value={date}
                             mode={mode}
                             format="DD/MM/YYYY"
-                            display='default'
+                            display="spinner"
                             onChange={this.setDate}
                         />
                     }
