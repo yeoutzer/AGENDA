@@ -77,7 +77,7 @@ export default class TodoModal extends React.Component {
                 </View>
 
                 <KeyboardAvoidingView style={[styles.section, styles.footer]} behavior='padding'>
-                    <TextInput style={[styles.input, {borderColor: this.state.color}]}/>
+                    <TextInput style={[styles.input, {borderColor: this.state.color, color: colors.white}]}/>
                     <TouchableOpacity style={[styles.addTodo, {backgroundColor: this.state.color}]}>
                         <AntDesign name='plus' size={16} color={colors.white}/>
                     </TouchableOpacity>

@@ -40,7 +40,7 @@ export default class App extends React.Component {
                     <AddListModal closeModal={() => this.toggleAddToDoModal()}/>
                 </Modal>
 
-                <View style={{flexDirection: 'row', marginTop: 40}}>
+                <View style={{flexDirection: 'row', marginTop: 70}}>
                     <View style={styles.lineEffect}/>
                     <Image style={styles.logo}
                            source={require('./images/logo_horizontal.png')}
