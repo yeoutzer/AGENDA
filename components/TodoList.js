@@ -25,10 +25,12 @@ export default class TodoList extends React.Component {
                     onRequestClose={() => this.toggleListModal()}
                 >
 
-                    <TodoModal list={list} closeModal={() => this.toggleListModal()}/>
-
+                    <TodoModal
+                        list={list}
+                        closeModal={() => this.toggleListModal()}
+                        updateList={this.props.updateList}
+                    />
                 </Modal>
-
                 <TouchableOpacity
                     style={[styles.listContainer, {borderColor: list.color}]}
                     onPress={() => this.toggleListModal()}

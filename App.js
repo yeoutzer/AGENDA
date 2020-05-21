@@ -6,7 +6,7 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    Modal
+    Modal,
 } from 'react-native';
 import {AntDesign, FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
 import colors from './Colors';
@@ -17,7 +17,8 @@ import Login from './components/Login';
 
 export default class App extends React.Component {
     state = {
-        addTodoVisible: false
+        addTodoVisible: false,
+        lists: tempData
     };
 
     toggleAddToDoModal() {
@@ -25,8 +26,20 @@ export default class App extends React.Component {
     }
 
     renderList = list => {
-        return <TodoList list={list}/>
-    }
+        return <TodoList list={list} updateList={this.updateList} />;
+    };
+
+    addList = list => {
+        this.setState({lists: [...this.state.lists, {...list, id: this.state.lists.length + 1, todos: [] }]});
+    };
+
+    updateList = list => {
+        this.setState({
+            lists: this.state.lists.map(item => {
+                return item.id === list.id ? list : item;
+            })
+        });
+    };
 
     render() {
         return (
@@ -37,7 +50,7 @@ export default class App extends React.Component {
                     visible={this.state.addTodoVisible}
                     onRequestClose={() => this.toggleAddToDoModal()}
                 >
-                    <AddListModal closeModal={() => this.toggleAddToDoModal()}/>
+                    <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList}/>
                 </Modal>
 
                 <View style={{flexDirection: 'row', marginTop: 70}}>
@@ -55,11 +68,12 @@ export default class App extends React.Component {
 
                 <View style={{height: 400, paddingLeft: 32}}>
                     <FlatList
-                        data={tempData}
+                        data={this.state.lists}
                         keyExtractor={item => item.name}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({item}) => this.renderList(item)}
+                        keyboardShouldPersistTaps='always'
                     />
                 </View>
 
