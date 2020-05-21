@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Image, Text, KeyboardAvoidingView} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Image, Text, KeyboardAvoidingView } from 'react-native';
 import LoginForm from './LoginForm';
 import colors from '../Colors';
 
@@ -16,7 +16,7 @@ export default class Login extends Component {
                     <Text style={styles.title}>Welcome to AGENDA!</Text>
                 </View>
                 <View style={styles.formContainer}>
-                    <LoginForm/>
+                    <LoginForm />
                 </View>
             </KeyboardAvoidingView>
         )
