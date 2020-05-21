@@ -77,7 +77,7 @@ export default class App extends React.Component {
                     />
                 </View>
 
-                <View style={{ flexDirection: 'row', flex: 1.5 }}>
+                <View style={{ flexDirection: 'row', flex: 0.5, alignItems: 'flex-end', marginBottom: 50 }}>
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
                             <FontAwesome5 name='user-friends' size={30} color={colors.white} />
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     horizontalDivider: {
-        flex: 0.7,
+        flex: 0.6,
         marginVertical: 15,
         justifyContent: 'flex-end'
     },

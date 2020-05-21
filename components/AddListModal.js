@@ -29,7 +29,7 @@ export default class AddListModal extends React.Component {
 
     createTodo = () => {
         const {name, color, date, remind} = this.state
-        const list = {name, color};
+        const list = {name, color, date, remind};
 
         this.props.addList(list);
 
