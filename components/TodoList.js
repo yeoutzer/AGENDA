@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 12,
         alignItems: 'center',
         width: 300,
-        height: 400,
+        flex: 0.85,
     },
     listTitle: {
         fontSize: 40,
