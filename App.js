@@ -53,7 +53,7 @@ export default class App extends React.Component {
                     <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
                 </Modal>
 
-                <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.5 }}>
+                <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.1 }}>
                     <View style={styles.lineEffect} />
                     <Image style={styles.logo}
                         source={require('./images/logo_horizontal.png')}
@@ -66,7 +66,7 @@ export default class App extends React.Component {
                     <Text style={styles.heading}>To-Do</Text>
                 </View>
 
-                <View style={{ paddingLeft: 32, flex: 3 }}>
+                <View style={{ paddingLeft: 32, flex: 4 }}>
                     <FlatList
                         data={this.state.lists}
                         keyExtractor={item => item.name}
@@ -112,8 +112,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     horizontalDivider: {
-        flex: 0.4,
-        marginTop: 15,
+        flex: 0.7,
+        marginVertical: 15,
+        justifyContent: 'flex-end'
     },
     lineEffect: {
         backgroundColor: colors.lightblue,

@@ -40,12 +40,12 @@ export default class TodoList extends React.Component {
                         color: list.color,
                         fontSize: 24,
                         fontWeight: '700',
-                        marginVertical: 15,
+                        flex: 1,
                     }} numberOfLines={1}>
                         {list.name}
                     </Text>
 
-                    <View>
+                    <View style={{flex: 6}}>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={[styles.count, { color: list.color }]}>{remainingCount}</Text>
                             <Text style={[styles.subtitle, { color: list.color }]}>Remaining</Text>
