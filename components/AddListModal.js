@@ -41,7 +41,7 @@ export default class AddListModal extends React.Component {
     }
 
     setDate = (event, date) => {
-        date = date || this.state.state
+        date = date || this.state.date
         this.setState({
             show: Platform.OS === 'ios' ? true : false,
             date,
@@ -100,7 +100,7 @@ export default class AddListModal extends React.Component {
                             trackColor={{false: 'gray', true: 'green'}}
                             thumbColor="white"
                             ios_backgroundColor="gray"
-                            onValueChange={(value) => this.setState({remind: value, show: value})}
+                            onValueChange={(value) => this.setState({remind: value, show: value, date: this.state.date})}
                             value={this.state.remind}
                         />
                         <View style={this.state.remind ? {opacity: 1} : {opacity: 0.1}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import moment from 'moment';
 import TodoModal from "./TodoModal"
 
@@ -9,7 +9,7 @@ export default class TodoList extends React.Component {
     };
 
     toggleListModal() {
-        this.setState({showListVisible: !this.state.showListVisible});
+        this.setState({ showListVisible: !this.state.showListVisible });
     }
 
     render() {
@@ -32,7 +32,7 @@ export default class TodoList extends React.Component {
                     />
                 </Modal>
                 <TouchableOpacity
-                    style={[styles.listContainer, {borderColor: list.color}]}
+                    style={[styles.listContainer, { borderColor: list.color }]}
                     onPress={() => this.toggleListModal()}
                 >
                     <Text style={[styles.listTitle],
@@ -46,22 +46,22 @@ export default class TodoList extends React.Component {
                     </Text>
 
                     <View>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={[styles.count, {color: list.color}]}>{remainingCount}</Text>
-                            <Text style={[styles.subtitle, {color: list.color}]}>Remaining</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={[styles.count, { color: list.color }]}>{remainingCount}</Text>
+                            <Text style={[styles.subtitle, { color: list.color }]}>Remaining</Text>
                         </View>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={[styles.count, {color: list.color}]}>{completedCount}</Text>
-                            <Text style={[styles.subtitle, {color: list.color}]}>Completed</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={[styles.count, { color: list.color }]}>{completedCount}</Text>
+                            <Text style={[styles.subtitle, { color: list.color }]}>Completed</Text>
                         </View>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{ alignItems: 'center' }}>
                             {list.remind == true
-                                ? <Text style={[styles.count, {color: list.color}]}>
+                                ? <Text style={[styles.count, { color: list.color }]}>
                                     {moment(list.date).diff(moment(), 'days') + 1}
                                 </Text>
                                 : null}
                             {list.remind == true
-                                ? <Text style={[styles.subtitle, {color: list.color}]}>Countdown</Text>
+                                ? <Text style={[styles.subtitle, { color: list.color }]}>Countdown</Text>
                                 : null}
                         </View>
 
