@@ -41,20 +41,21 @@ export default class TodoList extends React.Component {
                         fontSize: 24,
                         fontWeight: '700',
                         flex: 1,
+                        justifyContent: 'flex-end'
                     }} numberOfLines={1}>
                         {list.name}
                     </Text>
 
-                    <View style={{flex: 6}}>
-                        <View style={{ alignItems: 'center' }}>
+                    <View style={{flex: 4, justifyContent: 'center'}}>
+                        <View style={{ alignItems: 'center', flex: 1 }}>
                             <Text style={[styles.count, { color: list.color }]}>{remainingCount}</Text>
                             <Text style={[styles.subtitle, { color: list.color }]}>Remaining</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={{ alignItems: 'center', flex: 1 }}>
                             <Text style={[styles.count, { color: list.color }]}>{completedCount}</Text>
                             <Text style={[styles.subtitle, { color: list.color }]}>Completed</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <View style={{ alignItems: 'center', flex: 1 }}>
                             {list.remind == true
                                 ? <Text style={[styles.count, { color: list.color }]}>
                                     {moment(list.date).diff(moment(), 'days') + 1}
@@ -89,9 +90,8 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     count: {
-        fontSize: 48,
+        fontSize: 40,
         fontWeight: '200',
-        marginTop: 10,
     },
     subtitle: {
         fontSize: 12,
