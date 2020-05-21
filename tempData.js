@@ -1,5 +1,6 @@
 export default tempData = [
     {
+        id: 1,
         name: 'Plan a Trip',
         color: '#24A6D9',
         remind: true,
@@ -24,6 +25,7 @@ export default tempData = [
         ]
     },
     {
+        id: 2,
         name: 'Organise Event',
         color: '#228B22',
         remind: false,
@@ -40,6 +42,7 @@ export default tempData = [
         ]
     },
     {
+        id: 3,
         name: 'Errands',
         color: '#8022D9',
         remind: true,

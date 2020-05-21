@@ -6,9 +6,9 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    Modal
+    Modal,
 } from 'react-native';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import {AntDesign, FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
 import TodoList from './components/TodoList';
@@ -17,16 +17,29 @@ import Login from './components/Login';
 
 export default class App extends React.Component {
     state = {
-        addTodoVisible: false
+        addTodoVisible: false,
+        lists: tempData
     };
 
     toggleAddToDoModal() {
-        this.setState({ addTodoVisible: !this.state.addTodoVisible });
+        this.setState({addTodoVisible: !this.state.addTodoVisible});
     }
 
     renderList = list => {
-        return <TodoList list={list} />
-    }
+        return <TodoList list={list} updateList={this.updateList} />;
+    };
+
+    addList = list => {
+        this.setState({lists: [...this.state.lists, {...list, id: this.state.lists.length + 1, todos: [] }]});
+    };
+
+    updateList = list => {
+        this.setState({
+            lists: this.state.lists.map(item => {
+                return item.id === list.id ? list : item;
+            })
+        });
+    };
 
     render() {
         return (
@@ -37,52 +50,53 @@ export default class App extends React.Component {
                     visible={this.state.addTodoVisible}
                     onRequestClose={() => this.toggleAddToDoModal()}
                 >
-                    <AddListModal closeModal={() => this.toggleAddToDoModal()} />
+                    <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList}/>
                 </Modal>
 
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.lineEffect} />
+                <View style={{flexDirection: 'row', marginTop: 70}}>
+                    <View style={styles.lineEffect}/>
                     <Image style={styles.logo}
-                        source={require('./images/logo_horizontal.png')}
-                        resizeMode='contain'
+                           source={require('./images/logo_horizontal.png')}
+                           resizeMode='contain'
                     />
-                    <View style={styles.lineEffect} />
+                    <View style={styles.lineEffect}/>
                 </View>
 
                 <View style={styles.horizontalDivider}>
                     <Text style={styles.heading}>To-Do</Text>
                 </View>
 
-                <View style={{ height: 400, paddingLeft: 32 }}>
+                <View style={{height: 400, paddingLeft: 32}}>
                     <FlatList
-                        data={tempData}
+                        data={this.state.lists}
                         keyExtractor={item => item.name}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        renderItem={({ item }) => this.renderList(item)}
+                        renderItem={({item}) => this.renderList(item)}
+                        keyboardShouldPersistTaps='always'
                     />
                 </View>
 
                 <View style={styles.horizontalDivider}></View>
 
-                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                <View style={{flexDirection: 'row', marginTop: 15}}>
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
-                            <FontAwesome5 name='user-friends' size={30} color={colors.white} />
+                            <FontAwesome5 name='user-friends' size={30} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Friends</Text>
                     </View>
 
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
-                            <MaterialCommunityIcons name='chart-line' size={30} color={colors.white} />
+                            <MaterialCommunityIcons name='chart-line' size={30} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Rank</Text>
                     </View>
 
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList} onPress={() => this.toggleAddToDoModal()}>
-                            <AntDesign name='plus' size={24} color={colors.white} />
+                            <AntDesign name='plus' size={24} color={colors.white}/>
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Add List</Text>
                     </View>
@@ -100,7 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     horizontalDivider: {
-        paddingBottom: 10
+        marginVertical: 20
     },
     lineEffect: {
         backgroundColor: colors.lightblue,

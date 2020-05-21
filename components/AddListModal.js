@@ -5,13 +5,14 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    Switch
 } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
 import colors from '../Colors';
 import tempData from "../tempData";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { MaterialIcons } from '@expo/vector-icons';
+import {MaterialIcons} from '@expo/vector-icons';
 import moment from "moment";
 
 export default class AddListModal extends React.Component {
@@ -23,21 +24,20 @@ export default class AddListModal extends React.Component {
         date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
         mode: 'date',
         show: false,
-        remind: true
+        remind: false,
     };
 
     createTodo = () => {
-        const { name, color, date, remind } = this.state
+        const {name, color, date, remind} = this.state
 
-        tempData.push({
-            name,
-            color,
-            remind,
-            date,
-            todos: []
+        const list = {name, color};
+
+        this.props.addList(list);
+
+        this.setState({
+            name: "",
+            date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
         });
-
-        this.setState({ name: "", date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()) });
         this.props.closeModal();
     }
 
@@ -65,8 +65,8 @@ export default class AddListModal extends React.Component {
             return (
                 <TouchableOpacity
                     key={color}
-                    style={[styles.colorSelect, { backgroundColor: color }]}
-                    onPress={() => this.setState({ color })}
+                    style={[styles.colorSelect, {backgroundColor: color}]}
+                    onPress={() => this.setState({color})}
                 />
             )
         })
@@ -74,43 +74,61 @@ export default class AddListModal extends React.Component {
 
 
     render() {
-        const { mode, date, show } = this.state;
+        const {mode, date, show} = this.state;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor={'#1A1A1A'}>
-                <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={this.props.closeModal}>
-                    <AntDesign name="close" size={24} color={'white'} />
+                <TouchableOpacity style={{position: "absolute", top: 64, right: 32}} onPress={this.props.closeModal}>
+                    <AntDesign name="close" size={24} color={'white'}/>
                 </TouchableOpacity>
 
-                <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-                    <Text style={styles.title}>Create Todo List</Text>
+                <View style={{alignSelf: "stretch", marginHorizontal: 32}}>
+                    <Text style={styles.title}>Create To-Do List</Text>
 
                     <TextInput
                         style={styles.input}
                         placeholder="Task Name"
                         placeholderTextColor={colors.white}
-                        onChangeText={text => this.setState({ name: text })}
+                        onChangeText={text => this.setState({name: text})}
                     />
 
-                    <View style={{flexDirection: "row"}}>
-                    <View style={styles.dateBox}>
-                        <Text style={styles.dateText}>
-                            {moment(this.state.date).format("DD/MM/YYYY")}
-                        </Text>
-                    </View>
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginTop: 8
+                    }}>
+                        <Switch
+                            trackColor={{false: 'gray', true: 'green'}}
+                            thumbColor="white"
+                            ios_backgroundColor="gray"
+                            onValueChange={(value) => this.setState({remind: value, show: value})}
+                            value={this.state.remind}
+                        />
+                        <View style={this.state.remind ? {opacity: 1} : {opacity: 0.1}}>
+                            <View style={styles.dateBox}>
+                                <Text style={styles.dateText}>
+                                    {moment(this.state.date).format("DD/MM/YYYY")}
+                                </Text>
+                            </View>
 
-                    <TouchableOpacity
+                            {/*                    <TouchableOpacity
                         style={styles.calendar}
                         onPress={this.showDatePicker}
+                        disabled={!this.state.remind}
                     >
                         <MaterialIcons name="date-range" size={24} color={colors.white} />
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
+                        </View>
                     </View>
 
                     {
-                        show && <DateTimePicker
+                        show && this.state.remind && <DateTimePicker
                             style={{
                                 backgroundColor: '#FFFFFF',
                                 marginTop: 10,
+                                height: 100,
+                                overflow: 'hidden',
+                                borderRadius: 6
                             }}
                             value={date}
                             mode={mode}
@@ -120,15 +138,15 @@ export default class AddListModal extends React.Component {
                         />
                     }
 
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
+                    <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 12}}>
                         {this.renderColors()}
                     </View>
 
                     <TouchableOpacity
-                        style={[styles.create, { borderColor: this.state.color }]}
+                        style={[styles.create, {borderColor: this.state.color}]}
                         onPress={this.createTodo}
                     >
-                        <Text style={{ color: this.state.color, fontWeight: "600" }}>Create task</Text>
+                        <Text style={{color: this.state.color, fontWeight: "600"}}>Create</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -178,7 +196,6 @@ const styles = StyleSheet.create({
         width: 285,
         borderRadius: 6,
         height: 50,
-        marginTop: 8,
         paddingHorizontal: 12,
         fontSize: 18
     },
