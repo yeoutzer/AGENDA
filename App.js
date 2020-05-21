@@ -53,7 +53,7 @@ export default class App extends React.Component {
                     <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
                 </Modal>
 
-                <View style={{ flexDirection: 'row', marginTop: 70 }}>
+                <View style={{ flexDirection: 'row', marginTop: 70, flex: 1 }}>
                     <View style={styles.lineEffect} />
                     <Image style={styles.logo}
                         source={require('./images/logo_horizontal.png')}
@@ -66,7 +66,7 @@ export default class App extends React.Component {
                     <Text style={styles.heading}>To-Do</Text>
                 </View>
 
-                <View style={{ height: 400, paddingLeft: 32 }}>
+                <View style={{ paddingLeft: 32, flex: 4 }}>
                     <FlatList
                         data={this.state.lists}
                         keyExtractor={item => item.name}
@@ -77,9 +77,8 @@ export default class App extends React.Component {
                     />
                 </View>
 
-                <View style={styles.horizontalDivider}></View>
 
-                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                <View style={{ flexDirection: 'row', flex: 2 }}>
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
                             <FontAwesome5 name='user-friends' size={30} color={colors.white} />
@@ -114,20 +113,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     horizontalDivider: {
-        marginVertical: 20
+        flex: 0.5
     },
     lineEffect: {
         backgroundColor: colors.lightblue,
         height: 1,
         flex: 1,
         alignSelf: 'center',
-    },
-    title: {
-        fontSize: 38,
-        fontWeight: '800',
-        color: colors.black,
-        paddingHorizontal: 64,
-
     },
     menuList: {
         borderWidth: 2,
@@ -155,6 +147,8 @@ const styles = StyleSheet.create({
         height: 60,
         flex: 2,
         paddingHorizontal: 5,
+        alignSelf: 'center',
+        marginHorizontal: 10,
     },
     heading: {
         alignSelf: 'center',
