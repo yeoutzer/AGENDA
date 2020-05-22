@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     FlatList,
     Modal,
+    ActivityIndicator
 } from 'react-native';
 import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './Colors';
@@ -14,12 +15,35 @@ import tempData from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import Login from './components/Login';
+import Fire from './Fire';
 
 export default class App extends React.Component {
     state = {
         addTodoVisible: false,
-        lists: tempData
+        lists: [],
+        user: {},
+        loading: true
     };
+
+    componentDidMount() {
+        firebase = new Fire((error, user) => {
+            if (error) {
+                return alert("Something went wrong");
+            }
+
+            firebase.getLists(lists => {
+                this.setState({ lists, user }, () => {
+                    this.setState({ loading: false });
+                });
+            });
+
+            this.setState({ user });
+        });
+    }
+
+    componentWillUnmount() {
+        firebase.detach();
+    }
 
     toggleAddToDoModal() {
         this.setState({ addTodoVisible: !this.state.addTodoVisible });
@@ -42,8 +66,15 @@ export default class App extends React.Component {
     };
 
     render() {
+        if(this.state.loading) {
+            return (
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color={colors.blue}/>
+                </View>
+            )
+        }
+
         return (
-            //<Login />
             <View style={styles.container}>
                 <Modal
                     animationType="slide"
@@ -52,6 +83,10 @@ export default class App extends React.Component {
                 >
                     <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
                 </Modal>
+
+                <View>
+                    <Text style = {{color: colors.white}}>User: {this.state.user.uid}</Text>
+                </View>
 
                 <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.1 }}>
                     <View style={styles.lineEffect} />
@@ -69,7 +104,7 @@ export default class App extends React.Component {
                 <View style={{ paddingLeft: 32, flex: 4 }}>
                     <FlatList
                         data={this.state.lists}
-                        keyExtractor={item => item.name}
+                        keyExtractor={item => item.id.toString()}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => this.renderList(item)}
@@ -77,7 +112,7 @@ export default class App extends React.Component {
                     />
                 </View>
 
-                <View style={{ flexDirection: 'row', flex: 0.5, alignItems: 'flex-end', marginBottom: 50 }}>
+                <View style={styles.menu}>
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList}>
                             <FontAwesome5 name='user-friends' size={30} color={colors.white} />
@@ -121,6 +156,13 @@ const styles = StyleSheet.create({
         height: 1,
         flex: 1,
         alignSelf: 'center',
+    },
+    menu: {
+        flexDirection: 'row',
+        flex: 0.5,
+        alignItems: 'flex-end',
+        marginBottom: 50,
+        marginTop: 20
     },
     menuList: {
         borderWidth: 2,
