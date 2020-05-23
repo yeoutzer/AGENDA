@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import {AntDesign} from '@expo/vector-icons';
 import colors from '../Colors';
-import tempData from "../tempData";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {MaterialIcons} from '@expo/vector-icons';
 import moment from "moment";
@@ -127,7 +126,8 @@ export default class AddListModal extends React.Component {
                                 marginTop: 10,
                                 height: 100,
                                 overflow: 'hidden',
-                                borderRadius: 6
+                                borderRadius: 6,
+                                justifyContent: 'center'
                             }}
                             value={date}
                             mode={mode}

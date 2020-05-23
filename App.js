@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './Colors';
-import tempData from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import Login from './components/Login';
@@ -54,15 +53,17 @@ export default class App extends React.Component {
     };
 
     addList = list => {
-        this.setState({ lists: [...this.state.lists, { ...list, id: this.state.lists.length + 1, todos: [] }] });
+        firebase.addList({
+            name: list.name,
+            color: list.color,
+            date: list.date.getTime(),
+            remind: list.remind,
+            todos: []
+        })
     };
 
     updateList = list => {
-        this.setState({
-            lists: this.state.lists.map(item => {
-                return item.id === list.id ? list : item;
-            })
-        });
+        firebase.updateList(list);
     };
 
     render() {
@@ -84,9 +85,9 @@ export default class App extends React.Component {
                     <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
                 </Modal>
 
-                <View>
+{/*                <View>
                     <Text style = {{color: colors.white}}>User: {this.state.user.uid}</Text>
-                </View>
+                </View>*/}
 
                 <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.1 }}>
                     <View style={styles.lineEffect} />
