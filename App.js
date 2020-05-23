@@ -85,9 +85,9 @@ export default class App extends React.Component {
                     <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
                 </Modal>
 
-                <View>
+                {/*<View>
                     <Text style = {{color: colors.white}}>User: {this.state.user.uid}</Text>
-                </View>
+                </View>*/}
 
                 <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.1 }}>
                     <View style={styles.lineEffect} />
