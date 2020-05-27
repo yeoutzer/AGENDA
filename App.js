@@ -9,7 +9,7 @@ import {
     Modal,
     ActivityIndicator
 } from 'react-native';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
 import colors from './Colors';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
@@ -67,10 +67,10 @@ export default class App extends React.Component {
     };
 
     render() {
-        if(this.state.loading) {
+        if (this.state.loading) {
             return (
                 <View style={styles.container}>
-                    <ActivityIndicator size="large" color={colors.blue}/>
+                    <ActivityIndicator size="large" color={colors.blue} />
                 </View>
             )
         }
@@ -130,9 +130,17 @@ export default class App extends React.Component {
 
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList} onPress={() => this.toggleAddToDoModal()}>
-                            <AntDesign name='plus' size={24} color={colors.white} />
+                            <Entypo name="add-to-list" size={36} color={colors.white} />
+                            {/*<AntDesign name='plus' size={24} color={colors.white} />*/}
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Add List</Text>
+                    </View>
+
+                    <View style={styles.menuIcon}>
+                        <TouchableOpacity style={styles.menuList}>
+                        <MaterialCommunityIcons name="logout-variant" size={36} color={colors.white} />
+                        </TouchableOpacity>
+                        <Text style={styles.menuFont}>Logout</Text>
                     </View>
                 </View>
             </View>
@@ -161,7 +169,8 @@ const styles = StyleSheet.create({
     menu: {
         flexDirection: 'row',
         flex: 0.5,
-        alignItems: 'flex-end',
+        alignItems: 'center',
+        justifyContent:'space-around',
         marginBottom: 50,
         marginTop: 20
     },
