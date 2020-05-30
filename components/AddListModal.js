@@ -6,12 +6,15 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     TextInput,
-    Switch
+    Switch,
+    Alert,
+    Keyboard,
+    TouchableWithoutFeedback
 } from "react-native";
-import {AntDesign} from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import colors from '../Colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {MaterialIcons} from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import moment from "moment";
 
 export default class AddListModal extends React.Component {
@@ -27,8 +30,8 @@ export default class AddListModal extends React.Component {
     };
 
     createTodo = () => {
-        const {name, color, date, remind} = this.state
-        const list = {name, color, date, remind};
+        const { name, color, date, remind } = this.state
+        const list = { name, color, date, remind };
 
         this.props.addList(list);
 
@@ -63,8 +66,8 @@ export default class AddListModal extends React.Component {
             return (
                 <TouchableOpacity
                     key={color}
-                    style={[styles.colorSelect, {backgroundColor: color}]}
-                    onPress={() => this.setState({color})}
+                    style={[styles.colorSelect, { backgroundColor: color }]}
+                    onPress={() => this.setState({ color })}
                 />
             )
         })
@@ -72,83 +75,91 @@ export default class AddListModal extends React.Component {
 
 
     render() {
-        const {mode, date, show} = this.state;
+        const { mode, date, show } = this.state;
         return (
-            <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor={'#1A1A1A'}>
-                <TouchableOpacity style={{position: "absolute", top: 64, right: 32}} onPress={this.props.closeModal}>
-                    <AntDesign name="close" size={24} color={'white'}/>
-                </TouchableOpacity>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor={'#1A1A1A'}>
+                    <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={this.props.closeModal}>
+                        <AntDesign name="close" size={24} color={'white'} />
+                    </TouchableOpacity>
 
-                <View style={{alignSelf: "stretch", marginHorizontal: 32}}>
-                    <Text style={styles.title}>Create To-Do List</Text>
+                    <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
+                        <Text style={styles.title}>Create To-Do List</Text>
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Task Name"
-                        placeholderTextColor={colors.white}
-                        onChangeText={text => this.setState({name: text})}
-                    />
-
-                    <View style={{
-                        flexDirection: "row",
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginTop: 8
-                    }}>
-                        <Switch
-                            trackColor={{false: 'gray', true: 'green'}}
-                            thumbColor="white"
-                            ios_backgroundColor="gray"
-                            onValueChange={(value) => this.setState({remind: value, show: value, date: this.state.date})}
-                            value={this.state.remind}
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Task Name"
+                            placeholderTextColor={colors.white}
+                            onChangeText={text => this.setState({ name: text })}
                         />
-                        <View style={this.state.remind ? {opacity: 1} : {opacity: 0.1}}>
-                            <View style={styles.dateBox}>
-                                <Text style={styles.dateText}>
-                                    {moment(this.state.date).format("DD/MM/YYYY")}
-                                </Text>
-                            </View>
 
-                            {/*                    <TouchableOpacity
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginTop: 8
+                        }}>
+                            <Switch
+                                trackColor={{ false: 'gray', true: 'green' }}
+                                thumbColor="white"
+                                ios_backgroundColor="gray"
+                                onValueChange={(value) => this.setState({ remind: value, show: value, date: this.state.date })}
+                                value={this.state.remind}
+                            />
+                            <View style={this.state.remind ? { opacity: 1 } : { opacity: 0.1 }}>
+                                <View style={styles.dateBox}>
+                                    <Text style={styles.dateText}>
+                                        {moment(this.state.date).format("DD/MM/YYYY")}
+                                    </Text>
+                                </View>
+
+                                {/*                    <TouchableOpacity
                         style={styles.calendar}
                         onPress={this.showDatePicker}
                         disabled={!this.state.remind}
                     >
                         <MaterialIcons name="date-range" size={24} color={colors.white} />
                     </TouchableOpacity>*/}
+                            </View>
                         </View>
-                    </View>
 
-                    {
-                        show && this.state.remind && <DateTimePicker
-                            style={{
-                                backgroundColor: '#FFFFFF',
-                                marginTop: 10,
-                                height: 100,
-                                overflow: 'hidden',
-                                borderRadius: 6,
-                                justifyContent: 'center'
+                        {
+                            show && this.state.remind && <DateTimePicker
+                                style={{
+                                    backgroundColor: '#FFFFFF',
+                                    marginTop: 10,
+                                    height: 100,
+                                    overflow: 'hidden',
+                                    borderRadius: 6,
+                                    justifyContent: 'center'
+                                }}
+                                value={date}
+                                mode={mode}
+                                format="DD/MM/YYYY"
+                                display="spinner"
+                                onChange={this.setDate}
+                            />
+                        }
+
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 12 }}>
+                            {this.renderColors()}
+                        </View>
+
+                        <TouchableOpacity
+                            style={[styles.create, { borderColor: this.state.color }]}
+                            onPress={() => {
+                                if (this.state.name == '') {
+                                    Alert.alert('No input', 'Please enter name of task', [{ text: 'Ok' }]);
+                                } else {
+                                    this.createTodo();
+                                }
                             }}
-                            value={date}
-                            mode={mode}
-                            format="DD/MM/YYYY"
-                            display="spinner"
-                            onChange={this.setDate}
-                        />
-                    }
-
-                    <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 12}}>
-                        {this.renderColors()}
+                        >
+                            <Text style={{ color: this.state.color, fontWeight: "600" }}>Create</Text>
+                        </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity
-                        style={[styles.create, {borderColor: this.state.color}]}
-                        onPress={this.createTodo}
-                    >
-                        <Text style={{color: this.state.color, fontWeight: "600"}}>Create</Text>
-                    </TouchableOpacity>
-                </View>
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
         );
     }
 }

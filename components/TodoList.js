@@ -16,6 +16,7 @@ export default class TodoList extends React.Component {
         const list = this.props.list;
         const completedCount = list.todos.filter(todo => todo.completed).length;
         const remainingCount = list.todos.length - completedCount;
+        const countdown = moment(list.date).diff(moment(), 'days') + 1;
 
         return (
             <View>
@@ -58,10 +59,10 @@ export default class TodoList extends React.Component {
                         <View style={{ alignItems: 'center', flex: 1 }}>
                             {list.remind == true
                                 ? <Text style={[styles.count, { color: list.color }]}>
-                                    {moment(list.date).diff(moment(), 'days') + 1}
+                                    {countdown >= 0 ? countdown : 'Overdue'}
                                 </Text>
                                 : null}
-                            {list.remind == true
+                            {list.remind == true && countdown >= 0
                                 ? <Text style={[styles.subtitle, { color: list.color }]}>Countdown</Text>
                                 : null}
                         </View>
