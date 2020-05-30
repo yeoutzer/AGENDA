@@ -9,7 +9,8 @@ import {
     KeyboardAvoidingView,
     TextInput,
     Keyboard,
-    Animated
+    Animated,
+    Alert
 } from 'react-native';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import colors from '../Colors';
@@ -48,17 +49,24 @@ export default class TodoModal extends React.Component {
 
     renderTodo = (todo, index) => {
         return (
-            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
+            //<Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
             <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
+                {/*<TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
                     <Ionicons
                         name={todo.completed ? 'ios-square' : 'ios-square-outline'}
                         size={24}
                         color={colors.gray}
                         style={{width: 32}}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
 
+                <TouchableOpacity onPress={() => Alert.alert('Sub-task', todo.title, [
+                    {text: 'Cancel', onPress: () => console.log('Cancelled')},
+                    {text: 'Delete', onPress: () => this.deleteTodo(index)},
+                    {text: todo.completed? 'Uncomplete' : 'Complete', onPress: () => this.toggleTodoCompleted(index)}
+                ],
+                {cancelable: true}
+                )}>
                 <Text
                     style={[
                         styles.todo,
@@ -70,8 +78,9 @@ export default class TodoModal extends React.Component {
                 >
                     {todo.title}
                 </Text>
+                </TouchableOpacity>
             </View>
-            </Swipeable>
+            //</Swipeable>
         );
     };
 
