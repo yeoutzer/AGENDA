@@ -67,6 +67,7 @@ export default class TodoModal extends React.Component {
                 ],
                 {cancelable: true}
                 )}>*/}
+
                 <Text
                     style={[
                         styles.todo,
