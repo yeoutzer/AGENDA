@@ -15,21 +15,20 @@ import {
 } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
-//import { Swipeable } from 'react-native-gesture-handler';
 
 export default class TodoModal extends React.Component {
     state = {
         newTodo: ''
     };
 
-    toggleTodoCompleted = index => {
+    toggleSubTaskCompleted = index => {
         let list = this.props.list
         list.todos[index].completed = !list.todos[index].completed
 
         this.props.updateList(list);
     }
 
-    addTodo = () => {
+    addSubTask = () => {
         let list = this.props.list;
 
         if (!list.todos.some(todo => todo.title === this.state.newTodo)) {
@@ -42,7 +41,7 @@ export default class TodoModal extends React.Component {
         Keyboard.dismiss();
     };
 
-    deleteTodo = index => {
+    deleteSubTask = index => {
         let list = this.props.list
         list.todos.splice(index, 1)
         this.props.updateList(list);
@@ -50,9 +49,8 @@ export default class TodoModal extends React.Component {
 
     renderTodo = (todo, index) => {
         return (
-            //<Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
             <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)} style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => this.toggleSubTaskCompleted(index)} style={{ flex: 1 }}>
                     <Ionicons
                         name={todo.completed ? 'ios-square' : 'ios-square-outline'}
                         size={24}
@@ -72,7 +70,8 @@ export default class TodoModal extends React.Component {
                 >
                     {todo.title}
                 </Text>
-                <TouchableOpacity onPress={() => this.deleteTodo(index)} style={{ flex: 1 }}>
+
+                <TouchableOpacity onPress={() => this.deleteSubTask(index)} style={{ flex: 1 }}>
                     <Ionicons
                         name="ios-close-circle-outline"
                         size={24}
@@ -81,33 +80,8 @@ export default class TodoModal extends React.Component {
                     />
                 </TouchableOpacity>
             </View>
-            //</Swipeable>
         );
     };
-
-    rightActions = (dragX, index) => {
-        const scale = dragX.interpolate({
-            inputRange: [-100, 0],
-            outputRange: [1, 0.9],
-            extrapolate: 'clamp'
-        });
-
-        const opacity = dragX.interpolate({
-            inputRange: [-100, -20, 0],
-            outputRange: [1, 0.9, 0],
-            extrapolate: 'clamp'
-        });
-
-        return (
-            <TouchableOpacity onPress={() => this.deleteTodo(index)}>
-                <Animated.View style={[styles.deleteButton, { opacity: opacity }]}>
-                    <Animated.Text style={{ color: colors.white, fontWeight: '800', transform: [{ scale }] }}>
-                        Delete
-                    </Animated.Text>
-                </Animated.View>
-            </TouchableOpacity>
-        )
-    }
 
     render() {
         const list = this.props.list
@@ -154,7 +128,7 @@ export default class TodoModal extends React.Component {
                                     if (this.state.newTodo == '') {
                                         Alert.alert('No input', 'Please enter name of sub-task', [{ text: 'Ok' }]);
                                     } else {
-                                        this.addTodo();
+                                        this.addSubTask();
                                     }
                                 }}
                             >

@@ -14,7 +14,7 @@ import colors from './Colors';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import Login from './components/Login';
-import Fire from './Fire';
+import Fire from './components/Fire';
 
 export default class App extends React.Component {
     state = {
@@ -48,7 +48,7 @@ export default class App extends React.Component {
         this.setState({ addTodoVisible: !this.state.addTodoVisible });
     }
 
-    renderList = list => {
+    renderList = (list) => {
         return <TodoList list={list} updateList={this.updateList} />;
     };
 
@@ -131,7 +131,6 @@ export default class App extends React.Component {
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList} onPress={() => this.toggleAddToDoModal()}>
                             <Entypo name="add-to-list" size={36} color={colors.white} />
-                            {/*<AntDesign name='plus' size={24} color={colors.white} />*/}
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Add List</Text>
                     </View>

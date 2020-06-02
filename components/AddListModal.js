@@ -112,14 +112,6 @@ export default class AddListModal extends React.Component {
                                         {moment(this.state.date).format("DD/MM/YYYY")}
                                     </Text>
                                 </View>
-
-                                {/*                    <TouchableOpacity
-                        style={styles.calendar}
-                        onPress={this.showDatePicker}
-                        disabled={!this.state.remind}
-                    >
-                        <MaterialIcons name="date-range" size={24} color={colors.white} />
-                    </TouchableOpacity>*/}
                             </View>
                         </View>
 

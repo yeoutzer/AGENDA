@@ -32,10 +32,7 @@ export default class TodoList extends React.Component {
                         updateList={this.props.updateList}
                     />
                 </Modal>
-                <TouchableOpacity
-                    style={[styles.listContainer, { borderColor: list.color }]}
-                    onPress={() => this.toggleListModal()}
-                >
+                <View style={[styles.listContainer, { borderColor: list.color }]}>
                     <Text style={[styles.listTitle],
                     {
                         color: list.color,
@@ -52,10 +49,12 @@ export default class TodoList extends React.Component {
                             <Text style={[styles.count, { color: list.color }]}>{remainingCount}</Text>
                             <Text style={[styles.subtitle, { color: list.color }]}>Remaining</Text>
                         </View>
+
                         <View style={{ alignItems: 'center', flex: 1 }}>
                             <Text style={[styles.count, { color: list.color }]}>{completedCount}</Text>
                             <Text style={[styles.subtitle, { color: list.color }]}>Completed</Text>
                         </View>
+
                         <View style={{ alignItems: 'center', flex: 1 }}>
                             {list.remind == true
                                 ? <Text style={[styles.count, { color: list.color }]}>
@@ -66,9 +65,23 @@ export default class TodoList extends React.Component {
                                 ? <Text style={[styles.subtitle, { color: list.color }]}>Countdown</Text>
                                 : null}
                         </View>
-
                     </View>
-                </TouchableOpacity>
+                    
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                            style={[styles.editList, {borderColor: colors.blue}]}
+                            onPress={() => this.toggleListModal()}
+                        >
+                            <Text style = {[styles.subtitle, {color : colors.blue}]}>Edit</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[styles.deleteList, {borderColor: colors.red}]}
+                        >
+                            <Text style = {[styles.subtitle, {color: colors.red}]}>Delete</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -98,4 +111,24 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '700',
     },
+    editList: {
+        borderWidth: 2,
+        borderRadius: 4,
+        padding: 10,
+        marginHorizontal: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 40,
+        width: 50,
+    },
+    deleteList: {
+        borderWidth: 2,
+        borderRadius: 4,
+        padding: 10,
+        marginHorizontal: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 40,
+        width: 70,
+    }
 });
