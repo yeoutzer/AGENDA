@@ -1,37 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import moment from 'moment';
-import TodoModal from "./TodoModal"
 
 export default class TodoList extends React.Component {
     state = {
         showListVisible: false
     };
 
-    toggleListModal() {
-        this.setState({ showListVisible: !this.state.showListVisible });
-    }
-
     render() {
         const list = this.props.list;
+        const navigation = this.props.navigation;
         const completedCount = list.todos.filter(todo => todo.completed).length;
         const remainingCount = list.todos.length - completedCount;
         const countdown = moment(list.date).diff(moment(), 'days') + 1;
 
         return (
             <View>
-                <Modal
-                    animationType="slide"
-                    visible={this.state.showListVisible}
-                    onRequestClose={() => this.toggleListModal()}
-                >
-
-                    <TodoModal
-                        list={list}
-                        closeModal={() => this.toggleListModal()}
-                        updateList={this.props.updateList}
-                    />
-                </Modal>
                 <View style={[styles.listContainer, { borderColor: list.color }]}>
                     <Text style={[styles.listTitle],
                     {
@@ -70,7 +54,7 @@ export default class TodoList extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity
                             style={[styles.editList, {borderColor: colors.blue}]}
-                            onPress={() => this.toggleListModal()}
+                            onPress={() => navigation.navigate('Todo', {list: list})}
                         >
                             <Text style = {[styles.subtitle, {color : colors.blue}]}>Edit</Text>
                         </TouchableOpacity>

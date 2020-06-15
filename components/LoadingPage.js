@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
-//import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 
 export default class LoadingPage extends React.Component {
     /*componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'App' : 'Auth');
+            this.props.navigation.navigate(user ? 'Mains' : 'Logins');
         })
     }*/
 

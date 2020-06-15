@@ -6,14 +6,11 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    Modal,
     ActivityIndicator
 } from 'react-native';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
 import colors from '../Colors';
 import TodoList from './TodoList';
-import AddListModal from './AddListModal';
-import Login from './Login';
 import Fire from './Fire';
 
 export default class MainPage extends React.Component {
@@ -44,26 +41,8 @@ export default class MainPage extends React.Component {
         firebase.detach();
     }
 
-    toggleAddToDoModal() {
-        this.setState({ addTodoVisible: !this.state.addTodoVisible });
-    }
-
-    renderList = (list) => {
-        return <TodoList list={list} updateList={this.updateList} />;
-    };
-
-    addList = list => {
-        firebase.addList({
-            name: list.name,
-            color: list.color,
-            date: list.date.getTime(),
-            remind: list.remind,
-            todos: []
-        })
-    };
-
-    updateList = list => {
-        firebase.updateList(list);
+    renderList = (list, navigation) => {
+        return <TodoList list={list} navigation={navigation} />;
     };
 
     render() {
@@ -79,14 +58,6 @@ export default class MainPage extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    visible={this.state.addTodoVisible}
-                    onRequestClose={() => this.toggleAddToDoModal()}
-                >
-                    <AddListModal closeModal={() => this.toggleAddToDoModal()} addList={this.addList} />
-                </Modal>
-
                 {/*<View>
                     <Text style = {{color: colors.white}}>User: {this.state.user.uid}</Text>
                 </View>*/}
@@ -110,7 +81,7 @@ export default class MainPage extends React.Component {
                         keyExtractor={item => item.id.toString()}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        renderItem={({ item }) => this.renderList(item)}
+                        renderItem={({ item }) => this.renderList(item, navigation)}
                         keyboardShouldPersistTaps='always'
                     />
                 </View>
@@ -131,7 +102,10 @@ export default class MainPage extends React.Component {
                     </View>
 
                     <View style={styles.menuIcon}>
-                        <TouchableOpacity style={styles.menuList} onPress={() => this.toggleAddToDoModal()}>
+                        <TouchableOpacity
+                            style={styles.menuList}
+                            onPress={() => navigation.navigate('AddList')}
+                        >
                             <Entypo name="add-to-list" size={36} color={colors.white} />
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Add List</Text>

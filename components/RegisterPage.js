@@ -1,9 +1,34 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { 
+    StyleSheet,
+    View,
+    Image,
+    Text,
+    KeyboardAvoidingView, 
+    Keyboard, 
+    TouchableWithoutFeedback, 
+    StatusBar, 
+    TextInput, 
+    TouchableOpacity 
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
+import * as firebase from 'firebase';
 
 export default class RegisterPage extends React.Component {
+    state = {
+        email: "",
+        password: "",
+        error: null
+    }
+
+    /*handleSignUp = () => {
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .catch(error => this.setState({error: error.message}));
+    }*/
+
     render() {
         const navigation = this.props.navigation;
 
@@ -16,6 +41,7 @@ export default class RegisterPage extends React.Component {
                     >
                         <Ionicons name="md-arrow-back" size={24} color={colors.white} />
                     </TouchableOpacity>
+
                     <View style={styles.logoContainer}>
                         <Image
                             style={styles.logo}
@@ -24,10 +50,16 @@ export default class RegisterPage extends React.Component {
                         />
                         <Text style={styles.title}>Welcome to AGENDA!</Text>
                     </View>
+
+                    <View style={styles.error}>
+                        {this.state.error && <Text style={{ color: colors.red }}>{this.state.error}</Text>}
+                    </View>
+
                     <View style={styles.formContainer}>
                         <StatusBar
                             barStyle='light-content'
                         />
+
                         <TextInput
                             placeholder='Username'
                             placeholderTextColor='rgba(255,255,255,0.5)'
@@ -37,6 +69,7 @@ export default class RegisterPage extends React.Component {
                             autoCorrect={false}
                             style={styles.input}
                         />
+
                         <TextInput
                             placeholder='Password'
                             placeholderTextColor='rgba(255,255,255,0.5)'
@@ -45,6 +78,7 @@ export default class RegisterPage extends React.Component {
                             style={styles.input}
                             ref={(input) => this.passwordInput = input}
                         />
+
                         <TextInput
                             placeholder='Confirm Password'
                             placeholderTextColor='rgba(255,255,255,0.5)'
@@ -53,7 +87,12 @@ export default class RegisterPage extends React.Component {
                             style={styles.input}
                             ref={(input) => this.passwordInput = input}
                         />
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('LoginPage')}>
+
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.goBack()}
+                            //onPress={this.handleSignUp}
+                        >
                             <Text style={styles.buttonText}>Register</Text>
                         </TouchableOpacity>
                     </View>
@@ -106,4 +145,9 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: '700',
     },
+    error: {
+        margin: 10,
+        alignItems: "center",
+        justifyContent: "center",
+    }
 })

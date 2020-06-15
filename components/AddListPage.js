@@ -14,10 +14,9 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../Colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { MaterialIcons } from '@expo/vector-icons';
 import moment from "moment";
 
-export default class AddListModal extends React.Component {
+export default class AddListPage extends React.Component {
     backgroundColors = ["#5CD859", "#24A6D9", "#595BD9", "#8022D9", "#D159D8", "#D85962", "#D88559"];
 
     state = {
@@ -29,17 +28,26 @@ export default class AddListModal extends React.Component {
         remind: false,
     };
 
+    addList = list => {
+        firebase.addList({
+            name: list.name,
+            color: list.color,
+            date: list.date.getTime(),
+            remind: list.remind,
+            todos: []
+        })
+    };
+
     createTodo = () => {
         const { name, color, date, remind } = this.state
         const list = { name, color, date, remind };
 
-        this.props.addList(list);
+        this.addList(list);
 
         this.setState({
             name: "",
             date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
         });
-        this.props.closeModal();
     }
 
     setDate = (event, date) => {
@@ -75,11 +83,13 @@ export default class AddListModal extends React.Component {
 
 
     render() {
+        const navigation = this.props.navigation;
         const { mode, date, show } = this.state;
+
         return (
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <KeyboardAvoidingView style={styles.container} behavior="padding" backgroundColor={'#1A1A1A'}>
-                    <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={this.props.closeModal}>
+                    <TouchableOpacity style={{ position: "absolute", top: 64, right: 32 }} onPress={() => navigation.goBack()}>
                         <AntDesign name="close" size={24} color={'white'} />
                     </TouchableOpacity>
 
@@ -144,6 +154,7 @@ export default class AddListModal extends React.Component {
                                     Alert.alert('No input', 'Please enter name of task', [{ text: 'Ok' }]);
                                 } else {
                                     this.createTodo();
+                                    navigation.goBack();
                                 }
                             }}
                         >

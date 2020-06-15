@@ -1,38 +1,82 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoadingPage from './components/LoadingPage';
 import RegisterPage from './components/RegisterPage';
 import Login from './components/Login';
 import MainPage from './components/MainPage'
+import TodoPage from './components/TodoPage'
+import AddListPage from './components/AddListPage'
+//import * as firebase from 'firebase';
 
-function Loading() {
-    return <LoadingPage />
+/*const firebaseConfig = {
+    apiKey: "AIzaSyB0tAGUsw0gMLHyD0bw0QpBdkqrERunZzo",
+    authDomain: "agenda-db8ae.firebaseapp.com",
+    databaseURL: "https://agenda-db8ae.firebaseio.com",
+    projectId: "agenda-db8ae",
+    storageBucket: "agenda-db8ae.appspot.com",
+    messagingSenderId: "925766240720",
+    appId: "1:925766240720:web:3a15f519b392819eac51d5"
 }
 
-function LoginPage({ navigation }) {
-    return <Login navigation = {navigation} />
+firebase.initializeApp(firebaseConfig);*/
+
+function LoadingP({ navigation }) {
+    return <LoadingPage navigation={navigation}/>
 }
 
-function Register({ navigation }) {
-    return <RegisterPage navigation = {navigation}/>
+function LoginP({ navigation }) {
+    return <Login navigation={navigation} />
 }
 
-function Main({ navigation }) {
-    return <MainPage navigation = {navigation}/>
+function RegisterP({ navigation }) {
+    return <RegisterPage navigation={navigation} />
 }
 
+function MainP({ navigation }) {
+    return <MainPage navigation={navigation} />
+}
+
+function TodoP({ route, navigation }) {
+    const { list } = route.params;
+    return <TodoPage navigation={navigation} list={list}/>
+}
+
+function AddListP({ navigation }) {
+    return <AddListPage navigation={navigation} />
+}
+
+const LoginStack = createStackNavigator();
+const MainStack = createStackNavigator();
 const Stack = createStackNavigator();
+
+function Mains() {
+    return (
+        <MainStack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }} mode="modal">
+            <Stack.Screen name="Main" component={MainP} />
+            <Stack.Screen name="Todo" component={TodoP} />
+            <Stack.Screen name="AddList" component={AddListP} />
+        </MainStack.Navigator>
+    );
+}
+
+function Logins() {
+    return (
+        <LoginStack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginP} />
+            <Stack.Screen name="Register" component={RegisterP} />
+        </LoginStack.Navigator>
+    );
+}
 
 export default class App extends React.Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName = "LoginPage" screenOptions={{headerShown:false}}>
-                    <Stack.Screen name="LoginPage" component={LoginPage} />
-                    <Stack.Screen name="Register" component={Register} />
-                    <Stack.Screen name="Main" component={Main} />
+                <Stack.Navigator initialRouteName="Mains" screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="Logins" component={Logins} />
+                    <Stack.Screen name="Mains" component={Mains} />
+                    <Stack.Screen name="Loading" component={LoadingP} />
                 </Stack.Navigator>
             </NavigationContainer>
         );

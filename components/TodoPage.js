@@ -9,23 +9,27 @@ import {
     KeyboardAvoidingView,
     TextInput,
     Keyboard,
-    Animated,
     Alert,
     TouchableWithoutFeedback
 } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
 
-export default class TodoModal extends React.Component {
+export default class TodoPage extends React.Component {
     state = {
         newTodo: ''
+    };
+
+    updateList = list => {
+        firebase.updateList(list);
     };
 
     toggleSubTaskCompleted = index => {
         let list = this.props.list
         list.todos[index].completed = !list.todos[index].completed
 
-        this.props.updateList(list);
+        this.updateList(list);
+        this.setState({ newTodo: '' });
     }
 
     addSubTask = () => {
@@ -34,7 +38,7 @@ export default class TodoModal extends React.Component {
         if (!list.todos.some(todo => todo.title === this.state.newTodo)) {
             list.todos.push({ title: this.state.newTodo, completed: false });
 
-            this.props.updateList(list);
+            this.updateList(list);
         }
 
         this.setState({ newTodo: '' });
@@ -44,7 +48,8 @@ export default class TodoModal extends React.Component {
     deleteSubTask = index => {
         let list = this.props.list
         list.todos.splice(index, 1)
-        this.props.updateList(list);
+        this.updateList(list);
+        this.setState({ newTodo: '' });
     }
 
     renderTodo = (todo, index) => {
@@ -85,6 +90,7 @@ export default class TodoModal extends React.Component {
 
     render() {
         const list = this.props.list
+        const navigation = this.props.navigation;
 
         const taskCount = list.todos.length
         const completedCount = list.todos.filter(todo => todo.completed).length
@@ -95,7 +101,7 @@ export default class TodoModal extends React.Component {
                     <SafeAreaView style={styles.container}>
                         <TouchableOpacity
                             style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
-                            onPress={this.props.closeModal}
+                            onPress={() => navigation.goBack()}
                         >
                             <AntDesign name='close' size={24} color={colors.white} />
                         </TouchableOpacity>
