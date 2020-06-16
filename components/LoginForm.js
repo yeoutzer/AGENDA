@@ -10,14 +10,14 @@ export default class LoginForm extends Component {
         error: null
     }
 
-    /*handleLogin = () => {
+    handleLogin = () => {
         const {email, password} = this.state;
 
         firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .catch(error => this.setState({error: error.message}));
-    }*/
+    }
 
     render() {
         const navigation = this.props.navigation;
@@ -58,8 +58,8 @@ export default class LoginForm extends Component {
 
                     <TouchableOpacity
                         style={styles.buttonContainer}
-                        onPress={() => navigation.navigate('Mains')}
-                        //onPress={this.handleLogin}
+                        //onPress={() => navigation.navigate('Mains')}
+                        onPress={this.handleLogin}
                     >
                         <Text style={styles.buttonText}>LOGIN</Text>
                     </TouchableOpacity>

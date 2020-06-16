@@ -11,6 +11,7 @@ import {
 import { FontAwesome5, MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
 import colors from '../Colors';
 import TodoList from './TodoList';
+import LoadingPage from './LoadingPage'
 import Fire from './Fire';
 
 export default class MainPage extends React.Component {
@@ -42,18 +43,23 @@ export default class MainPage extends React.Component {
     }
 
     renderList = (list, navigation) => {
-        return <TodoList list={list} navigation={navigation} />;
+        return <TodoList list={list} navigation={navigation} user={this.state.user}/>;
     };
 
     render() {
         const navigation = this.props.navigation;
 
         if (this.state.loading) {
-            return (
+            /*return (
                 <View style={styles.container}>
                     <ActivityIndicator size="large" color={colors.blue} />
                 </View>
-            )
+            )*/
+            return (
+                <View style = {styles.container}>
+                    <LoadingPage/>
+                </View>
+            );
         }
 
         return (
@@ -112,7 +118,7 @@ export default class MainPage extends React.Component {
                     </View>
 
                     <View style={styles.menuIcon}>
-                        <TouchableOpacity style={styles.menuList} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={styles.menuList} onPress={() => navigation.popToTop()}>
                         <MaterialCommunityIcons name="logout-variant" size={36} color={colors.white} />
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Logout</Text>

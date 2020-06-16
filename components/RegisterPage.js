@@ -19,15 +19,18 @@ export default class RegisterPage extends React.Component {
     state = {
         email: "",
         password: "",
+        //confirmPassword: "",
         error: null
     }
 
-    /*handleSignUp = () => {
+    handleSignUp = () => {
+        const {email, password} = this.state;
+
         firebase
         .auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .createUserWithEmailAndPassword(email, password)
         .catch(error => this.setState({error: error.message}));
-    }*/
+    }
 
     render() {
         const navigation = this.props.navigation;
@@ -68,6 +71,8 @@ export default class RegisterPage extends React.Component {
                             autoCapitalize='none'
                             autoCorrect={false}
                             style={styles.input}
+                            onChangeText={email => this.setState({ email: email })}
+                            value = {this.state.email}
                         />
 
                         <TextInput
@@ -77,21 +82,25 @@ export default class RegisterPage extends React.Component {
                             secureTextEntry
                             style={styles.input}
                             ref={(input) => this.passwordInput = input}
+                            onChangeText={password => this.setState({ password: password })}
+                            value ={this.state.password}
                         />
 
-                        <TextInput
+                        {/*<TextInput
                             placeholder='Confirm Password'
                             placeholderTextColor='rgba(255,255,255,0.5)'
                             returnKeyType='go'
                             secureTextEntry
                             style={styles.input}
                             ref={(input) => this.passwordInput = input}
-                        />
+                            onChangeText={cpassword => this.setState({cpassword})}
+                            value ={this.state.confirmPassword}
+                        />*/}
 
                         <TouchableOpacity
                             style={styles.buttonContainer}
-                            onPress={() => navigation.goBack()}
-                            //onPress={this.handleSignUp}
+                            //onPress={() => navigation.goBack()}
+                            onPress={this.handleSignUp}
                         >
                             <Text style={styles.buttonText}>Register</Text>
                         </TouchableOpacity>

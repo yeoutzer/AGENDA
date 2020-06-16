@@ -4,12 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoadingPage from './components/LoadingPage';
 import RegisterPage from './components/RegisterPage';
 import Login from './components/Login';
-import MainPage from './components/MainPage'
-import TodoPage from './components/TodoPage'
-import AddListPage from './components/AddListPage'
-//import * as firebase from 'firebase';
+import MainPage from './components/MainPage';
+import TodoPage from './components/TodoPage';
+import AddListPage from './components/AddListPage';
+import * as firebase from 'firebase';
 
-/*const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyB0tAGUsw0gMLHyD0bw0QpBdkqrERunZzo",
     authDomain: "agenda-db8ae.firebaseapp.com",
     databaseURL: "https://agenda-db8ae.firebaseio.com",
@@ -19,7 +19,7 @@ import AddListPage from './components/AddListPage'
     appId: "1:925766240720:web:3a15f519b392819eac51d5"
 }
 
-firebase.initializeApp(firebaseConfig);*/
+firebase.initializeApp(firebaseConfig);
 
 function LoadingP({ navigation }) {
     return <LoadingPage navigation={navigation}/>

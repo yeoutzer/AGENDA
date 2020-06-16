@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
 
 export default class TodoList extends React.Component {
@@ -9,6 +9,7 @@ export default class TodoList extends React.Component {
 
     render() {
         const list = this.props.list;
+        const user = this.props.user;
         const navigation = this.props.navigation;
         const completedCount = list.todos.filter(todo => todo.completed).length;
         const remainingCount = list.todos.length - completedCount;
@@ -61,6 +62,10 @@ export default class TodoList extends React.Component {
 
                         <TouchableOpacity
                             style={[styles.deleteList, {borderColor: colors.red}]}
+                            onPress={() => Alert.alert('Delete Task', 'Confirm delete task?', [
+                                { text: 'Yes', onPress: () => firebase.deleteList(list) },
+                                { text: 'No' }
+                            ])}
                         >
                             <Text style = {[styles.subtitle, {color: colors.red}]}>Delete</Text>
                         </TouchableOpacity>
