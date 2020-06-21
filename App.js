@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoadingPage from './components/LoadingPage';
 import RegisterPage from './components/RegisterPage';
 import Login from './components/Login';
 import MainPage from './components/MainPage';
@@ -21,10 +20,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-function LoadingP({ navigation }) {
-    return <LoadingPage navigation={navigation}/>
-}
-
 function LoginP({ navigation }) {
     return <Login navigation={navigation} />
 }
@@ -38,12 +33,13 @@ function MainP({ navigation }) {
 }
 
 function TodoP({ route, navigation }) {
-    const { list } = route.params;
-    return <TodoPage navigation={navigation} list={list}/>
+    const { list, refer } = route.params;
+    return <TodoPage navigation={navigation} list={list} refer={refer}/>
 }
 
-function AddListP({ navigation }) {
-    return <AddListPage navigation={navigation} />
+function AddListP({ route, navigation }) {
+    const { refer } = route.params;
+    return <AddListPage navigation={navigation} refer={refer}/>
 }
 
 const LoginStack = createStackNavigator();
@@ -73,10 +69,9 @@ export default class App extends React.Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Mains" screenOptions={{ headerShown: false }}>
+                <Stack.Navigator initialRouteName="Logins" screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="Logins" component={Logins} />
                     <Stack.Screen name="Mains" component={Mains} />
-                    <Stack.Screen name="Loading" component={LoadingP} />
                 </Stack.Navigator>
             </NavigationContainer>
         );

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { 
     StyleSheet,
     View,
@@ -14,26 +14,37 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
 import * as firebase from 'firebase';
+import LoadingPage from './LoadingPage';
 
 export default class RegisterPage extends React.Component {
     state = {
         email: "",
         password: "",
         //confirmPassword: "",
-        error: null
+        error: null,
+        loading: false
     }
 
     handleSignUp = () => {
+        this.setState({error: null, loading: true});
         const {email, password} = this.state;
 
         firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .catch(error => this.setState({error: error.message}));
+        .then(() => {
+            this.setState({error: null, loading: false});
+            this.props.navigation.navigate('Mains');
+        })
+        .catch(error => this.setState({error: error.message, loading: false}));
     }
 
     render() {
         const navigation = this.props.navigation;
+
+        if (this.state.loading) {
+            return <LoadingPage/>
+        }
 
         return (
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -51,7 +62,7 @@ export default class RegisterPage extends React.Component {
                             source={require('../images/logo_nowords.png')}
                             resizeMode='contain'
                         />
-                        <Text style={styles.title}>Welcome to AGENDA!</Text>
+                        <Text style={styles.title}>Register Here!</Text>
                     </View>
 
                     <View style={styles.error}>
@@ -135,6 +146,7 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         marginBottom: 150,
+        marginHorizontal: 20
     },
     input: {
         height: 40,

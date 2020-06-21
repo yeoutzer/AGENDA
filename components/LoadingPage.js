@@ -4,12 +4,6 @@ import * as firebase from 'firebase';
 import colors from '../Colors';
 
 export default class LoadingPage extends React.Component {
-    /*componentDidMount() {
-        firebase.auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Test' : 'Logins');
-        })
-    }*/
-
     render() {
         return (
             <View style={styles.container}>

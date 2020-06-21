@@ -7,9 +7,14 @@ export default class TodoList extends React.Component {
         showListVisible: false
     };
 
+    deleteList(list) {
+        let refer = this.props.refer;
+
+        refer.doc(list.id).delete();
+    }
+
     render() {
         const list = this.props.list;
-        const user = this.props.user;
         const navigation = this.props.navigation;
         const completedCount = list.todos.filter(todo => todo.completed).length;
         const remainingCount = list.todos.length - completedCount;
@@ -55,7 +60,7 @@ export default class TodoList extends React.Component {
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity
                             style={[styles.editList, {borderColor: colors.blue}]}
-                            onPress={() => navigation.navigate('Todo', {list: list})}
+                            onPress={() => navigation.navigate('Todo', {list: list, refer: this.props.refer})}
                         >
                             <Text style = {[styles.subtitle, {color : colors.blue}]}>Edit</Text>
                         </TouchableOpacity>
@@ -63,7 +68,7 @@ export default class TodoList extends React.Component {
                         <TouchableOpacity
                             style={[styles.deleteList, {borderColor: colors.red}]}
                             onPress={() => Alert.alert('Delete Task', 'Confirm delete task?', [
-                                { text: 'Yes', onPress: () => firebase.deleteList(list) },
+                                { text: 'Yes', onPress: () => this.deleteList(list) },
                                 { text: 'No' }
                             ])}
                         >

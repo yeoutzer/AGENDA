@@ -20,9 +20,12 @@ export default class TodoPage extends React.Component {
         newTodo: ''
     };
 
-    updateList = list => {
-        firebase.updateList(list);
-    };
+    updateList(list) {
+        let refer = this.props.refer;
+
+        refer.doc(list.id).update(list);
+    }
+
 
     toggleSubTaskCompleted = index => {
         let list = this.props.list

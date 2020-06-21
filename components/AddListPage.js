@@ -20,7 +20,7 @@ export default class AddListPage extends React.Component {
     backgroundColors = ["#5CD859", "#24A6D9", "#595BD9", "#8022D9", "#D159D8", "#D85962", "#D88559"];
 
     state = {
-        name: "",
+        name: '',
         color: this.backgroundColors[0],
         date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
         mode: 'date',
@@ -29,7 +29,9 @@ export default class AddListPage extends React.Component {
     };
 
     addList = list => {
-        firebase.addList({
+        const refer = this.props.refer;
+
+        refer.add({
             name: list.name,
             color: list.color,
             date: list.date.getTime(),
@@ -45,7 +47,7 @@ export default class AddListPage extends React.Component {
         this.addList(list);
 
         this.setState({
-            name: "",
+            name: '',
             date: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
         });
     }

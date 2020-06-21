@@ -6,13 +6,13 @@ import {
     View,
     TouchableOpacity,
     FlatList,
-    ActivityIndicator
 } from 'react-native';
-import { FontAwesome5, MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import colors from '../Colors';
 import TodoList from './TodoList';
 import LoadingPage from './LoadingPage'
-import Fire from './Fire';
+import * as firebase from 'firebase';
+import "@firebase/firestore";
 
 export default class MainPage extends React.Component {
     state = {
@@ -22,52 +22,50 @@ export default class MainPage extends React.Component {
         loading: true
     };
 
+    get userId() {
+        return firebase.auth().currentUser.uid;
+    }
+
+    get refer() {
+        return firebase
+            .firestore()
+            .collection('users')
+            .doc(this.userId)
+            .collection('lists');
+    }
+
     componentDidMount() {
-        firebase = new Fire((error, user) => {
-            if (error) {
-                return alert("Something went wrong");
-            }
+        let refer = this.refer.orderBy('date');
 
-            firebase.getLists(lists => {
-                this.setState({ lists, user }, () => {
-                    this.setState({ loading: false });
-                });
+        this.unsubscribe = refer.onSnapshot(snapshot => {
+            const todos = [];
+            snapshot.forEach(doc => {
+                todos.push({ id: doc.id, ...doc.data() });
             });
-
-            this.setState({ user });
+            this.setState({lists: todos});
         });
+
+        this.setState({ loading: false, user: this.userId })
+
     }
 
     componentWillUnmount() {
-        firebase.detach();
+        this.unsubscribe();
     }
 
     renderList = (list, navigation) => {
-        return <TodoList list={list} navigation={navigation} user={this.state.user}/>;
+        return <TodoList list={list} navigation={navigation} refer={this.refer} />;
     };
 
     render() {
         const navigation = this.props.navigation;
 
         if (this.state.loading) {
-            /*return (
-                <View style={styles.container}>
-                    <ActivityIndicator size="large" color={colors.blue} />
-                </View>
-            )*/
-            return (
-                <View style = {styles.container}>
-                    <LoadingPage/>
-                </View>
-            );
+            return <LoadingPage />
         }
 
         return (
             <View style={styles.container}>
-                {/*<View>
-                    <Text style = {{color: colors.white}}>User: {this.state.user.uid}</Text>
-                </View>*/}
-
                 <View style={{ flexDirection: 'row', marginTop: 70, flex: 0.1 }}>
                     <View style={styles.lineEffect} />
                     <Image style={styles.logo}
@@ -75,6 +73,10 @@ export default class MainPage extends React.Component {
                         resizeMode='contain'
                     />
                     <View style={styles.lineEffect} />
+                </View>
+
+                <View>
+                    <Text style={{ color: colors.white }}>User: {this.state.user}</Text>
                 </View>
 
                 <View style={styles.horizontalDivider}>
@@ -110,7 +112,7 @@ export default class MainPage extends React.Component {
                     <View style={styles.menuIcon}>
                         <TouchableOpacity
                             style={styles.menuList}
-                            onPress={() => navigation.navigate('AddList')}
+                            onPress={() => navigation.navigate('AddList', {refer: this.refer})}
                         >
                             <Entypo name="add-to-list" size={36} color={colors.white} />
                         </TouchableOpacity>
@@ -119,7 +121,7 @@ export default class MainPage extends React.Component {
 
                     <View style={styles.menuIcon}>
                         <TouchableOpacity style={styles.menuList} onPress={() => navigation.popToTop()}>
-                        <MaterialCommunityIcons name="logout-variant" size={36} color={colors.white} />
+                            <MaterialCommunityIcons name="logout-variant" size={36} color={colors.white} />
                         </TouchableOpacity>
                         <Text style={styles.menuFont}>Logout</Text>
                     </View>
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 0.5,
         alignItems: 'center',
-        justifyContent:'space-around',
+        justifyContent: 'space-around',
         marginBottom: 50,
         marginTop: 20
     },
